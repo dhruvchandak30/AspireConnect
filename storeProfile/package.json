@@ -1,0 +1,22 @@
+{
+  "name": "storeprofile",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+   "start":"nodemon ./dist/profile.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.21",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4"
+  }
+}
