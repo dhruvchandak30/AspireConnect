@@ -4,8 +4,8 @@ import Home from "./pages/home";
 import ErrorPage from "./pages/error";
 import Navbar from "./components/Navbar/Navbar";
 import ContactUs from "./components/Contact/ContactUs";
-import Signin from "./components/Login/signin";
-import Signup from "./components/Login/signup";
+import Signin from "./pages/signin";
+import Signup from "./pages/signup";
 
 function App() {
   return (
@@ -16,12 +16,10 @@ function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="*" element={<ErrorPage />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path="signup" element={<Signup />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
-// LinkedInLogo
-//GithubLogo

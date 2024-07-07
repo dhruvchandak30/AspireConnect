@@ -11,9 +11,9 @@ const Navbar = () => {
 
   return (
     <div className="bg-white border-b-2 flex flex-col lg:flex-row justify-between items-center px-8 border-black shadow-md">
-      <div className="flex justify-between items-center w-full lg:w-auto">
+      <div className="flex justify-between items-center ">
         <Link to="/">
-          <img src={logo} alt="Aspire" className="w-[3rem]" />
+          <img src={logo} alt="Aspire" className="w-[2rem]" />
         </Link>
         <button className="lg:hidden text-black" onClick={toggleMenu}>
           <svg
