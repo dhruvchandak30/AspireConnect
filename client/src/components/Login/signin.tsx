@@ -12,15 +12,31 @@ const Signin = () => {
     navigate("/signup");
   };
 
-  const formSubmitHandler = (e: React.FormEvent) => {
+  const formSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Basic validation
-    if (!email || !password) {
-      setWarning("Email and password are required.");
-      return;
+
+    try {
+      const response = await fetch("https://example.com/api/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Signin successful:", data);
+        navigate("/");
+      } else {
+        const errorData = await response.json();
+        console.error("Signin failed:", errorData.message);
+        setWarning("Failed to sign in. Please check your credentials.");
+      }
+    } catch (error) {
+      console.error("Error signing in:", error);
+      setWarning("An unexpected error occurred. Please try again later.");
     }
-    // Further authentication logic goes here
-    console.log("Email:", email, "Password:", password);
   };
 
   return (

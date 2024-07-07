@@ -46,6 +46,7 @@ const Signup = () => {
       setshowPage(true);
     }
   };
+
   const checkInterests = (interests: string): boolean => {
     let count = 0;
     for (let i = 0; i < interests.length; i++) {
@@ -127,13 +128,30 @@ const Signup = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const submitHandler = (e: React.FormEvent) => {
+  const submitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validatePage2()) {
       setWarning("");
-      // Handle form submission
-      console.log(user);
-      navigate("/")
+      try {
+        const response = await fetch("https://example.com/api/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Signup successful:", data);
+          navigate("/");
+        } else {
+          console.error("Signup failed:", response.statusText);
+          setWarning("Failed to submit form. Please try again later.");
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        setWarning("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 
