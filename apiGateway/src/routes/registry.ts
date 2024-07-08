@@ -7,7 +7,7 @@ export type Service = {
 
 export type ServiceInstance = {
   index: number;
-  instances: Service[]; // Changed to an array of Service objects
+  instances: Service[];
   loadBalancerStrategy: "ROUND_ROBIN" | "LEAST_USED";
 };
 
@@ -30,7 +30,7 @@ const registry: { services: Record<string, ServiceInstance> } = {
           url: "http://localhost:3001",
         },
         {
-          apiName: "testapi",
+          apiName: "storeprofile",
           host: "http://localhost",
           port: 3001,
           url: "http://localhost:3001",

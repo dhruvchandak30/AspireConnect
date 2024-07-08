@@ -1,14 +1,10 @@
 import express, { Request, Response } from "express";
-import axios from "axios";
-import registry, { Service } from "./registry";
-import loadbalancer, {
-  LoadBalancer,
-  ServiceInstance,
-} from "../util/loadBalancer";
+import registry from "./registry";
+import loadbalancer, { LoadBalancer } from "../util/loadBalancer";
 
 const router = express.Router();
 
-router.all("/:apiName/*", (req: Request, res: Response) => {
+router.all("/:apiName/*", async (req: Request, res: Response) => {
   const apiName = req.params.apiName;
   const path = req.params[0];
 
@@ -23,17 +19,27 @@ router.all("/:apiName/*", (req: Request, res: Response) => {
       const newIndex = loadbalancer[strategy](serviceInstance);
       console.log("Going to Service", newIndex);
       const url = serviceInstance.instances[newIndex].url + "/" + path;
-      console.log(url);
-      axios({
-        method: req.method as any,
-        url: url,
-        headers: req.headers,
-        data: req.body,
-      })
-        .then((response: any) => {
-          res.send(response.data);
+      console.log(req.body);
+
+      const options: RequestInit = {
+        method: req.method as string,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req.body),
+      };
+
+      fetch(url, options)
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          console.log("Sent Data back", data.text);
+          res.send(data);
         })
-        .catch((error: any) => {
+        .catch((error) => {
+          console.error("Fetch error:", error);
           res.status(500).send({ message: "Internal Server Error" });
         });
     } else {

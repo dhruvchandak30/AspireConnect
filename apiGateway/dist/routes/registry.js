@@ -19,7 +19,7 @@ const registry = {
                     url: "http://localhost:3001",
                 },
                 {
-                    apiName: "testapi",
+                    apiName: "storeprofile",
                     host: "http://localhost",
                     port: 3001,
                     url: "http://localhost:3001",
