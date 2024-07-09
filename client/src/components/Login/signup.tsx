@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./Signin.css";
 import { useNavigate } from "react-router-dom";
+import url from "../../util";
 
 interface UserType {
   firstName: string;
@@ -133,7 +134,7 @@ const Signup = () => {
     if (validatePage2()) {
       setWarning("");
       try {
-        const response = await fetch("https://example.com/api/signup", {
+        const response = await fetch(`${url}/storeprofile/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -143,7 +144,7 @@ const Signup = () => {
         if (response.ok) {
           const data = await response.json();
           console.log("Signup successful:", data);
-          navigate("/");
+          // navigate("/");
         } else {
           console.error("Signup failed:", response.statusText);
           setWarning("Failed to submit form. Please try again later.");

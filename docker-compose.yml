@@ -1,0 +1,15 @@
+version: "3"
+services:
+  apigateway:
+    build:
+      context: ./apiGateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+  storeprofile:
+    build:
+      context: ./storeProfile
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"

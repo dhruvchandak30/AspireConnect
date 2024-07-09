@@ -1,0 +1,20 @@
+{
+  "name": "aspireconnect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:apiGateway && npm run build:storeProfile",
+    "build:apiGateway": "npm run build --prefix apiGateway",
+    "build:storeProfile": "npm run build --prefix storeProfile",
+    "start": "npm run build && concurrently \"npm run start:apiGateway\" \"npm run start:storeProfile\"",
+    "start:apiGateway": "npm run start --prefix apiGateway",
+    "start:storeProfile": "npm run start --prefix storeProfile"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

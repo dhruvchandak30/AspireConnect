@@ -19,8 +19,6 @@ router.all("/:apiName/*", async (req: Request, res: Response) => {
       const newIndex = loadbalancer[strategy](serviceInstance);
       console.log("Going to Service", newIndex);
       const url = serviceInstance.instances[newIndex].url + "/" + path;
-      console.log(req.body);
-
       const options: RequestInit = {
         method: req.method as string,
         headers: {
@@ -35,7 +33,6 @@ router.all("/:apiName/*", async (req: Request, res: Response) => {
             throw new Error("Network response was not ok");
           }
           const data = await response.json();
-          console.log("Sent Data back", data.text);
           res.send(data);
         })
         .catch((error) => {

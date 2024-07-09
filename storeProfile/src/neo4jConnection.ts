@@ -4,16 +4,11 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
 
 app.post("/signup", async (req: Request, res: Response) => {
-  console.log("Received data:", req.body);
-  
-  // Process your data or perform any necessary operations
-
+  const data = req.body;
   res.send({
-    text: "Hello from Store Profile Service",
+    mssg: "Successful signup",
   });
 });
 

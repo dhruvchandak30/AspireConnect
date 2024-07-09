@@ -27,7 +27,8 @@ router.all("/:apiName/*", (req, res) => __awaiter(void 0, void 0, void 0, functi
             const newIndex = loadBalancer_1.default[strategy](serviceInstance);
             console.log("Going to Service", newIndex);
             const url = serviceInstance.instances[newIndex].url + "/" + path;
-            console.log(req.body);
+            console.log("Body is", req.body);
+            console.log("Method", req.method);
             const options = {
                 method: req.method,
                 headers: {
@@ -41,7 +42,6 @@ router.all("/:apiName/*", (req, res) => __awaiter(void 0, void 0, void 0, functi
                     throw new Error("Network response was not ok");
                 }
                 const data = yield response.json();
-                console.log("Sent Data back", data.text);
                 res.send(data);
             }))
                 .catch((error) => {
