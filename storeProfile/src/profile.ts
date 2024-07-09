@@ -1,86 +1,42 @@
-import express, { Request, Response } from "express";
-import bodyParser from "body-parser";
+import express, { Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
+import driver from "./neo4jConnection";
+import signupRouter from "./routes/signup";
+
 const app = express();
-const port = 3001;
-
+dotenv.config();
 app.use(express.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended: true }));
 
-app.post("/signup", async (req: Request, res: Response) => {
-  console.log("Received data:", req.body);
-  
-  // Process your data or perform any necessary operations
+const port = process.env.PORT || 3001;
 
-  res.send({
-    text: "Hello from Store Profile Service",
-  });
+// Middleware to add Neo4j session to the request object
+app.use((req: Request, res: Response, next: NextFunction) => {
+  req.neo4jSession = driver.session();
+  next();
 });
 
-app.listen(port, () => {
+// Routes
+app.use("/signup", signupRouter);
+
+
+const checkDatabaseConnection = async () => {
+  try {
+    const session = driver.session();
+    await session.run("RETURN 1");
+    await session.close();
+    console.log("Successfully connected to the database");
+  } catch (error) {
+    console.error("Failed to connect to the database", error);
+  }
+};
+
+app.listen(port, async () => {
   console.log(`Server is running on ${port}`);
+  await checkDatabaseConnection();
 });
 
-// import neo4j, { Driver, Session } from "neo4j-driver";
-// import exp from "constants";
-
-// const driver: Driver = neo4j.driver(
-//   "neo4j+s://ea94a48f.databases.neo4j.io",
-//   neo4j.auth.basic("neo4j", "sG8jKwphp4ymqMXe-JBv5sX1dKAJgDOEFZBR78lhVZU")
-// );
-
-// app.post("/movies", async (req: Request, res: Response) => {
-//   const { title } = req.body;
-//   const session: Session = driver.session();
-//   try {
-//     const result = await session.run(
-//       "CREATE (m:Movie {title: $title}) RETURN m",
-//       { title }
-//     );
-//     const movie = result.records[0].get("m").properties;
-//     res.status(201).json(movie);
-//   } catch (error) {
-//     res.status(500).json({ error: (error as Error).message });
-//   } finally {
-//     await session.close();
-//   }
-// });
-
-// app.post("/actors", async (req: Request, res: Response) => {
-//   const { name } = req.body;
-//   const session: Session = driver.session();
-//   try {
-//     const result = await session.run(
-//       "CREATE (a:Actor {name: $name}) RETURN a",
-//       { name }
-//     );
-//     const actor = result.records[0].get("a").properties;
-//     res.status(201).json(actor);
-//   } catch (error) {
-//     res.status(500).json({ error: (error as Error).message });
-//   } finally {
-//     await session.close();
-//   }
-// });
-
-// app.post("/addActorToMovie", async (req: Request, res: Response) => {
-//   const { movieTitle, actorName } = req.body;
-//   const session: Session = driver.session();
-//   try {
-//     const result = await session.run(
-//       `
-//       MATCH (m:Movie {title: $movieTitle})
-//       MATCH (a:Actor {name: $actorName})
-//       CREATE (a)-[:ACTED_IN]->(m)
-//       RETURN m
-//       `,
-//       { movieTitle, actorName }
-//     );
-//     const movie = result.records[0].get("m").properties;
-//     res.status(201).json(movie);
-//   } catch (error) {
-//     res.status(500).json({ error: (error as Error).message });
-//   } finally {
-//     await session.close();
-//   }
-// });
+process.on("SIGINT", async () => {
+  await driver.close();
+  console.log("Neo4j driver closed");
+  process.exit(0);
+});

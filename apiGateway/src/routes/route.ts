@@ -19,6 +19,7 @@ router.all("/:apiName/*", async (req: Request, res: Response) => {
       const newIndex = loadbalancer[strategy](serviceInstance);
       console.log("Going to Service", newIndex);
       const url = serviceInstance.instances[newIndex].url + "/" + path;
+      console.log(url, req.body);
       const options: RequestInit = {
         method: req.method as string,
         headers: {

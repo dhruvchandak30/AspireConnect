@@ -27,8 +27,7 @@ router.all("/:apiName/*", (req, res) => __awaiter(void 0, void 0, void 0, functi
             const newIndex = loadBalancer_1.default[strategy](serviceInstance);
             console.log("Going to Service", newIndex);
             const url = serviceInstance.instances[newIndex].url + "/" + path;
-            console.log("Body is", req.body);
-            console.log("Method", req.method);
+            console.log(url, req.body);
             const options = {
                 method: req.method,
                 headers: {

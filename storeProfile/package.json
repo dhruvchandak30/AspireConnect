@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -b",
-    "start": "tsc -b && nodemon ./dist/neo4jConnection.js"
+    "start": "nodemon ./dist/profile.js"
   },
   "keywords": [],
   "author": "",
