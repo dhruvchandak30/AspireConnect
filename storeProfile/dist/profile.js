@@ -20,14 +20,12 @@ const app = (0, express_1.default)();
 dotenv_1.default.config();
 app.use(express_1.default.json());
 const port = process.env.PORT || 3001;
-// Middleware to add Neo4j session to the request object
 app.use((req, res, next) => {
     req.neo4jSession = neo4jConnection_1.default.session();
     next();
 });
 // Routes
 app.use("/signup", signup_1.default);
-// Function to check database connection
 const checkDatabaseConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const session = neo4jConnection_1.default.session();

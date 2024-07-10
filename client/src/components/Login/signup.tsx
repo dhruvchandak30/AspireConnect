@@ -2,6 +2,9 @@ import { useState } from "react";
 import "./Signin.css";
 import { useNavigate } from "react-router-dom";
 import url from "../../util";
+import { useSetRecoilState } from "recoil";
+import { userId } from "../../store/atoms/userId";
+import { usernameAtom } from "../../store/atoms/username";
 
 interface UserType {
   firstName: string;
@@ -36,6 +39,9 @@ const Signup = () => {
     career: "",
     interests: "",
   });
+
+  const setUserId = useSetRecoilState(userId);
+  const setUsername = useSetRecoilState(usernameAtom);
 
   const toggleSignUp = () => {
     navigate("/signin");
@@ -144,7 +150,14 @@ const Signup = () => {
         if (response.ok) {
           const data = await response.json();
           console.log("Signup successful:", data);
-          // navigate("/");
+          if (data.message === "User successfully signed up") {
+            console.log(data.user.id, data.user.firstName);
+            setUserId(data.user.id);
+            setUsername(data.user.firstName);
+            navigate("/");
+          } else {
+            setWarning("Failed to submit form. Please try again later.");
+          }
         } else {
           console.error("Signup failed:", response.statusText);
           setWarning("Failed to submit form. Please try again later.");
@@ -174,11 +187,12 @@ const Signup = () => {
         </div>
         {!nextPage ? (
           <div className="form-container sign-up-container">
-            <form onSubmit={submitHandler}>
+            <form className="form1" onSubmit={submitHandler}>
               <div className="flex flex-col justify-around gap-6">
                 <div className="text-2xl font-bold">Create Account</div>
                 <div>
                   <input
+                    className="input1"
                     type="text"
                     placeholder="First Name"
                     name="firstName"
@@ -187,6 +201,7 @@ const Signup = () => {
                     required
                   />
                   <input
+                    className="input1"
                     type="text"
                     placeholder="Last Name"
                     name="lastName"
@@ -195,6 +210,7 @@ const Signup = () => {
                     required
                   />
                   <input
+                    className="input1"
                     type="email"
                     placeholder="Email"
                     name="email"
@@ -203,6 +219,7 @@ const Signup = () => {
                     required
                   />
                   <input
+                    className="input1"
                     type="password"
                     placeholder="Password"
                     name="password"
@@ -211,6 +228,7 @@ const Signup = () => {
                     required
                   />
                   <input
+                    className="input1"
                     type="password"
                     placeholder="Confirm Password"
                     name="confirmPassword"
@@ -221,7 +239,22 @@ const Signup = () => {
                 </div>
                 {warning && <div className="text-red-500">{warning}</div>}
                 <div>
-                  <button type="button" onClick={nextInfoHandler}>
+                  <button
+                    onClick={nextInfoHandler}
+                    type="submit"
+                    className="w-full py-2 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                    style={{
+                      background: "linear-gradient(to right, #ff4b2b, #ff4160)",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background =
+                        "linear-gradient(to right, #ff4160, #ff4b2b)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background =
+                        "linear-gradient(to right, #ff4b2b, #ff4160)")
+                    }
+                  >
                     Next
                   </button>
                 </div>
@@ -230,13 +263,13 @@ const Signup = () => {
           </div>
         ) : (
           <div className="form-container sign-up-container">
-            <form onSubmit={submitHandler}>
+            <form className="form1" onSubmit={submitHandler}>
               <div className="flex flex-col justify-around gap-1">
                 <div className="text-2xl font-bold">Information</div>
                 <div>
                   <input
                     type="number"
-                    className="bg-gray-200"
+                    className="input1 bg-gray-200"
                     min={14}
                     required
                     placeholder="Age"
@@ -272,7 +305,7 @@ const Signup = () => {
                   <input
                     type="text"
                     required
-                    className="bg-gray-200"
+                    className="input1 bg-gray-200"
                     placeholder="Location"
                     name="location"
                     value={user.location}
@@ -280,7 +313,7 @@ const Signup = () => {
                   />
                   <input
                     type="text"
-                    className="bg-gray-200"
+                    className="input1 bg-gray-200"
                     placeholder="Bio"
                     name="bio"
                     value={user.bio}
@@ -290,7 +323,7 @@ const Signup = () => {
                   <input
                     type="text"
                     required
-                    className="bg-gray-200"
+                    className="input1 bg-gray-200"
                     placeholder="Journey (Min 50 words)"
                     name="journey"
                     value={user.journey}
@@ -300,7 +333,7 @@ const Signup = () => {
                   <input
                     type="text"
                     required
-                    className="bg-gray-200"
+                    className="input1 bg-gray-200"
                     placeholder="Career"
                     name="career"
                     value={user.career}
@@ -309,7 +342,7 @@ const Signup = () => {
                   <input
                     type="text"
                     required
-                    className="bg-gray-200"
+                    className="input1 bg-gray-200"
                     placeholder="Minimum 3 interests, separated by commas."
                     name="interests"
                     value={user.interests}
@@ -318,10 +351,41 @@ const Signup = () => {
                 </div>
                 {warning && <div className="text-red-500">{warning}</div>}
                 <div className="flex flex-row gap-2">
-                  <button type="button" onClick={nextInfoHandler}>
+                  <button
+                    onClick={nextInfoHandler}
+                    type="submit"
+                    className="w-full py-2 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                    style={{
+                      background: "linear-gradient(to right, #ff4b2b, #ff4160)",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background =
+                        "linear-gradient(to right, #ff4160, #ff4b2b)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background =
+                        "linear-gradient(to right, #ff4b2b, #ff4160)")
+                    }
+                  >
                     Previous
                   </button>
-                  <button type="submit">Submit</button>
+                  <button
+                    type="submit"
+                    className="w-full py-2 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                    style={{
+                      background: "linear-gradient(to right, #ff4b2b, #ff4160)",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background =
+                        "linear-gradient(to right, #ff4160, #ff4b2b)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background =
+                        "linear-gradient(to right, #ff4b2b, #ff4160)")
+                    }
+                  >
+                    Submit
+                  </button>
                 </div>
               </div>
             </form>

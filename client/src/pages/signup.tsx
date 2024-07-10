@@ -1,9 +1,11 @@
 import Signup from "../components/Login/signup";
-
+import { RecoilRoot } from "recoil";
 const signup = () => {
   return (
     <div>
-      <Signup />
+      <RecoilRoot>
+        <Signup />
+      </RecoilRoot>
     </div>
   );
 };

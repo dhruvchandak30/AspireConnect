@@ -46,11 +46,12 @@ const Signin = () => {
           <form
             onSubmit={formSubmitHandler}
             action="#"
-            className="flex flex-col justify-between"
+            className="form1 flex flex-col justify-between"
           >
             <div className="text-2xl font-bold">Sign in</div>
             <div>
               <input
+                className="input1"
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -58,6 +59,7 @@ const Signin = () => {
                 required
               />
               <input
+                className="input1"
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -70,7 +72,23 @@ const Signin = () => {
               <a href="#" className="text-[16px]">
                 Forgot your password?
               </a>
-              <button type="submit">Sign In</button>
+              <button
+                type="submit"
+                className="w-full py-2 text-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                style={{
+                  background: "linear-gradient(to right, #ff4b2b, #ff4160)",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background =
+                    "linear-gradient(to right, #ff4160, #ff4b2b)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background =
+                    "linear-gradient(to right, #ff4b2b, #ff4160)")
+                }
+              >
+                SignIn
+              </button>
             </div>
           </form>
         </div>

@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import driver from "./neo4jConnection";
 import signupRouter from "./routes/signup";
+import { session } from "neo4j-driver";
 
 const app = express();
 dotenv.config();
@@ -9,7 +10,6 @@ app.use(express.json());
 
 const port = process.env.PORT || 3001;
 
-// Middleware to add Neo4j session to the request object
 app.use((req: Request, res: Response, next: NextFunction) => {
   req.neo4jSession = driver.session();
   next();
@@ -17,7 +17,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // Routes
 app.use("/signup", signupRouter);
-
 
 const checkDatabaseConnection = async () => {
   try {
