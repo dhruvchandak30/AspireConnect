@@ -7,8 +7,8 @@ import bodyParser from 'body-parser';
 dotenv.config();
 
 const app = express();
-// app.use(express.json());
-app.use(bodyParser.json());
+app.use(express.json());
+// app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");

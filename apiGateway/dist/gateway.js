@@ -8,11 +8,10 @@ const route_1 = __importDefault(require("./routes/route"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const helmet_1 = __importDefault(require("helmet"));
 const rate_limiter_flexible_1 = require("rate-limiter-flexible");
-const body_parser_1 = __importDefault(require("body-parser"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-// app.use(express.json());
-app.use(body_parser_1.default.json());
+app.use(express_1.default.json());
+// app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
