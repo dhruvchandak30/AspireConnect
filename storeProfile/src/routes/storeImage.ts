@@ -8,9 +8,9 @@ import multer from 'multer';
 const upload = multer({ dest: 'uploads/' });
 
 cloudinary.v2.config({
-    cloud_name: 'dohky5q86',
-    api_key: '971431767226324',
-    api_secret: 'lZcQav4UbfAHM3M2GbcxZ9YtbdM',
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECREY,
     secure: true,
 });
 

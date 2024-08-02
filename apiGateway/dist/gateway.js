@@ -11,7 +11,6 @@ const rate_limiter_flexible_1 = require("rate-limiter-flexible");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-// app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");

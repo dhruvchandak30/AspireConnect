@@ -2,9 +2,12 @@ import { useState } from 'react';
 import './Signin.css';
 import { useNavigate } from 'react-router-dom';
 import url from '../../util';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../../store/atoms/userState';
 
 const Signin = () => {
     const navigate = useNavigate();
+    const setUser = useSetRecoilState(userState);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [warning, setWarning] = useState<string>('');
@@ -34,7 +37,9 @@ const Signin = () => {
                     setWarning(data.message);
                     return;
                 }
-                console.log('Signin successful:', data);
+
+                setUser(data.user);
+
                 navigate('/');
             } else {
                 const errorData = await response.json();

@@ -24,7 +24,6 @@ router.all('/:apiName/*', async (req: Request, res: Response) => {
             Object.keys(req.query).forEach((key) =>
                 url.searchParams.append(key, req.query[key] as string)
             );
-
             console.log(url.toString(), req.body, req.method);
 
             const headers = Object.fromEntries(
