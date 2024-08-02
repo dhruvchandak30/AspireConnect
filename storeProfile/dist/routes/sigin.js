@@ -37,6 +37,8 @@ signinRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function*
                 email: user.properties.email,
                 firstName: user.properties.firstName,
                 lastName: user.properties.lastName,
+                id: user.properties.id,
+                image_url: user.properties.image_url,
             },
         });
     }

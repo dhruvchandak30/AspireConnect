@@ -45,6 +45,8 @@ signinRouter.post('/', async (req: Request, res: Response) => {
                 email: user.properties.email,
                 firstName: user.properties.firstName,
                 lastName: user.properties.lastName,
+                id: user.properties.id,
+                image_url: user.properties.image_url,
             },
         });
     } catch (error) {

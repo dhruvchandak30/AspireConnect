@@ -40,7 +40,8 @@ signupRouter.post('/', async (req: Request, res: Response) => {
         bio: $bio,
         journey: $journey,
         career: $career,
-        interests: $interests
+        interests: $interests,
+        image_url:$image_url
       }) RETURN u`,
             {
                 userId,
@@ -55,6 +56,7 @@ signupRouter.post('/', async (req: Request, res: Response) => {
                 journey: userData.journey,
                 career: userData.career,
                 interests: userData.interests,
+                image_url: "",
             }
         );
 

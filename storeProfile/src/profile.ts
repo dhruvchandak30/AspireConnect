@@ -5,9 +5,21 @@ import signupRouter from './routes/signup';
 import getUserRouter from './routes/getUsers';
 import { session } from 'neo4j-driver';
 import signinRouter from './routes/sigin';
+import storeImageRouter from './routes/storeImage';
 
 const app = express();
 dotenv.config();
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+  
+  app.options('*', (req, res) => {
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    res.send();
+  });
 app.use(express.json());
 
 const port = process.env.PORT || 3001;
@@ -21,6 +33,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 app.use('/signup', signupRouter);
 app.use('/signin', signinRouter);
 app.use('/getuser', getUserRouter);
+app.use('/storeimage',storeImageRouter);
 
 const checkDatabaseConnection = async () => {
     try {

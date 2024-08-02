@@ -10,4 +10,5 @@ export interface UserType {
     journey: string;
     career: string;
     interests: string;
+    image_url: string;
   }

@@ -18,8 +18,19 @@ const neo4jConnection_1 = __importDefault(require("./neo4jConnection"));
 const signup_1 = __importDefault(require("./routes/signup"));
 const getUsers_1 = __importDefault(require("./routes/getUsers"));
 const sigin_1 = __importDefault(require("./routes/sigin"));
+const storeImage_1 = __importDefault(require("./routes/storeImage"));
 const app = (0, express_1.default)();
 dotenv_1.default.config();
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+app.options('*', (req, res) => {
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    res.send();
+});
 app.use(express_1.default.json());
 const port = process.env.PORT || 3001;
 app.use((req, res, next) => {
@@ -30,6 +41,7 @@ app.use((req, res, next) => {
 app.use('/signup', signup_1.default);
 app.use('/signin', sigin_1.default);
 app.use('/getuser', getUsers_1.default);
+app.use('/storeimage', storeImage_1.default);
 const checkDatabaseConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const session = neo4jConnection_1.default.session();

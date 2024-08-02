@@ -39,7 +39,8 @@ signupRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function*
         bio: $bio,
         journey: $journey,
         career: $career,
-        interests: $interests
+        interests: $interests,
+        image_url:$image_url
       }) RETURN u`, {
             userId,
             firstName: userData.firstName,
@@ -53,6 +54,7 @@ signupRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function*
             journey: userData.journey,
             career: userData.career,
             interests: userData.interests,
+            image_url: "",
         }));
         const user = result === null || result === void 0 ? void 0 : result.records[0].get('u');
         console.log(user);
