@@ -20,9 +20,9 @@ const path_1 = __importDefault(require("path"));
 const multer_1 = __importDefault(require("multer"));
 const upload = (0, multer_1.default)({ dest: 'uploads/' });
 cloudinary_1.default.v2.config({
-    cloud_name: 'dohky5q86',
-    api_key: '971431767226324',
-    api_secret: 'lZcQav4UbfAHM3M2GbcxZ9YtbdM',
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECREY,
     secure: true,
 });
 const storeImageRouter = (0, express_1.Router)();
